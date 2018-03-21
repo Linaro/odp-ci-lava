@@ -1,0 +1,118 @@
+job_name: thunderx-lng03
+
+timeouts:
+    job:
+        minutes: 900
+    action:
+        minutes: 20
+    connection:
+        minutes: 20
+
+visibility: public
+priority: medium
+
+protocols:
+    lava-multinode:
+        roles:
+            thunderx:
+                device_type: thunderx
+                count: 1
+                context:
+                    extra_kernel_args: default_hugepagesz=2M hugepagesz=1G hugepages=1 hugepagesz=2M hugepages=1024
+            lng03:
+                device_type: x86
+                count: 1
+                context:
+                    extra_kernel_args: default_hugepagesz=2M hugepagesz=1G hugepages=1 hugepagesz=2M hugepages=1024
+    lava-vland:
+        thunderx:
+            vlan_one:
+                tags:
+                    - 40G
+        lng03:
+            vlan_one:
+                tags:
+                    - 40G
+
+actions:
+- deploy:
+    role:
+        - thunderx
+    timeout:
+        minutes: 10
+    to: tftp
+    kernel:
+        url: http://people.linaro.org/~ilias.apalodimas/images/ubuntu-17.10-arm64/vmlinuz-4.13.0-16-generic
+    nfsrootfs:
+        url: http://people.linaro.org/~ilias.apalodimas/images/ubuntu-17.10-arm64/binary.tar.xz
+        compression: xz
+        prefix: binary/
+    ramdisk:
+        url: http://people.linaro.org/~ilias.apalodimas/images/ubuntu-17.10-arm64/initrd.img-4.13.0-16-generic  
+        compression: gz
+    dtb:
+        url: http://images.validation.linaro.org/thunderx/thunder-88xx.dtb
+    os: debian
+    protocols:
+        lava-vland:
+            - action: lava-vland-overlay
+              request: deploy_vlans
+
+- deploy:
+    role:
+        - lng03
+    timeout:
+        minutes: 10
+    to: tftp
+    kernel:
+        url: http://people.linaro.org/~ilias.apalodimas/images/ubuntu-17.10/vmlinuz-4.13.0-19-generic
+    nfsrootfs:
+        url: http://people.linaro.org/~ilias.apalodimas/images/ubuntu-17.10/binary.tar.xz
+        compression: xz
+        prefix: binary/
+    ramdisk:
+        url: http://people.linaro.org/~ilias.apalodimas/images/ubuntu-17.10/initrd.img-4.13.0-19-generic
+        compression: gz
+    os: debian
+    protocols:
+        lava-vland:
+            - action: lava-vland-overlay
+              request: deploy_vlans
+
+- boot:
+    role:
+        - thunderx
+    timeout:
+        minutes: 15
+    method: grub
+    commands: nfs
+    parameters:
+        shutdown-message: "reboot: Restarting system"
+    prompts:
+        - 'root@lng(.*)'
+        - 'root@local(.*)'
+        - 'localhost(.*)'
+- boot:
+    role:
+        - lng03
+    timeout:
+        minutes: 15
+    method: ipxe
+    commands: nfs
+    parameters:
+        shutdown-message: "reboot: Restarting system"
+    prompts:
+        - 'root@lng(.*)'
+
+- test:
+    role:
+        - thunderx
+        - lng03
+    timeout:
+        minutes: 900
+
+    definitions:
+        - repository: https://github.com/Linaro/odp-ci-lava.git
+          from: git
+          path: execs/ubuntu-build-essential.yaml
+          name: ubuntu-build-essential
