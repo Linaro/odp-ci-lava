@@ -1,0 +1,40 @@
+metadata:
+  name: ODP installation
+  format: "Lava-Test-Shell Test Definition 1.0"
+  description: "Setup ODP"
+  version: 1.0
+
+params:
+    ODP_BRANCH: master
+    BUILD_DIR: /root/odp_install
+    ODP_JOBS: 32
+
+install:
+    deps:
+        - autotools-dev
+        - autoconf
+        - libtool
+        - autogen
+        - gcc
+        - git
+        - g++
+        - make
+        - libssl-dev
+        - libcunit1
+        - libcunit1-dev
+        - libconfig-dev
+        - m4
+        - pkg-config
+        - locales-all
+
+run:
+    steps:
+        - echo "Build ODP"
+        - git clone https://github.com/Linaro/odp.git
+        - cd odp
+        - git checkout $ODP_BRANCH
+        - ./bootstrap
+        - autoreconf -i
+        - ./configure --enable-debug --enable-debug-print --prefix=$BUILD_DIR
+        - make -j $ODP_JOBS
+        - make install

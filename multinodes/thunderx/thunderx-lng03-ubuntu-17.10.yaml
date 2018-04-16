@@ -116,3 +116,8 @@ actions:
           from: git
           path: execs/ubuntu-build-essential.yaml
           name: ubuntu-build-essential
+    
+        - repository: https://github.com/Linaro/odp-ci-lava.git
+          from: git
+          path: execs/odp-build.yaml
+          name: build-ODP
