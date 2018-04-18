@@ -13,4 +13,4 @@ install:
 run:
     steps:
         - echo "Build DPDK"
-        - $(./scripts/build-dpdk.sh)
+        - ./scripts/build-dpdk.sh
