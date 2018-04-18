@@ -34,3 +34,4 @@ install:
         - flex
         - libpcap-dev
         - lsb-release
+        - wget

@@ -1,0 +1,16 @@
+metadata:
+  name: Build DPDK
+  format: "Lava-Test-Shell Test Definition 1.0"
+  description: "Build DPDK"
+  version: 1.0
+
+install:
+    deps:
+        - libnuma1
+        - libnuma-dev
+        - libpcap-dev
+
+run:
+    steps:
+        - echo "Build DPDK"
+        - $(./scripts/build-dpdk.sh)
