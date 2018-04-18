@@ -19,7 +19,7 @@ wget https://fast.dpdk.org/rel/dpdk-"$DPDK_VER".tar.xz -O "$DPDK_STATIC_TAR" && 
 	mkdir "$DPDK_DIR" && tar xf "$DPDK_STATIC_TAR" --strip 1 -C "$DPDK_DIR"
 
 # terminate LAVA job if download failed
-[ $? -ne 0 ] && dpdk_lava_result DPDK_DOWNLOAD FAILED yes
+[ $? -ne 0 ] && dpdk_lava_result 'DPDK_DOWNLOAD' 'FAILED' 'yes'
 
 # we usually run on Xeon/Thunderx, aadjust accordingly for future archs
 case $arch in
@@ -32,7 +32,7 @@ case $arch in
 		cjobs=24
 		;;
 	*) 
-		dpdk_lava_result BUILD_ARCH UNKNOWN_ARCH yes
+		dpdk_lava_result 'BUILD_ARCH' 'UNKNOWN_ARCH' 'yes'
 esac
 
 cd "$DPDK_DIR"
