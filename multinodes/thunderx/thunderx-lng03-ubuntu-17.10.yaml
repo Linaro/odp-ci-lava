@@ -121,7 +121,7 @@ actions:
           from: git
           path: execs/dpdk-build.yaml
           name: build-DPDK
-    
+
         - repository: https://github.com/Linaro/odp-ci-lava.git
           from: git
           path: execs/odp-build.yaml

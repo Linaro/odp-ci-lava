@@ -4,11 +4,6 @@ metadata:
   description: "Setup ODP"
   version: 1.0
 
-params:
-    ODP_BRANCH: master
-    BUILD_DIR: /root/odp_install
-    ODP_JOBS: 32
-
 install:
     deps:
         - autotools-dev
@@ -30,11 +25,4 @@ install:
 run:
     steps:
         - echo "Build ODP"
-        - git clone https://github.com/Linaro/odp.git
-        - cd odp
-        - git checkout $ODP_BRANCH
-        - ./bootstrap
-        - autoreconf -i
-        - ./configure --enable-debug --enable-debug-print --prefix=$BUILD_DIR
-        - make -j $ODP_JOBS
-        - make install
+        - ./scripts/build-odp.sh

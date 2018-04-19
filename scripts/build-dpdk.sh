@@ -1,19 +1,12 @@
 #!/bin/sh
 
+. ./lava-comon.sh
+
 DPDK_VER='17.11.1'
 DPDK_DIR='dpdk_source'
 DPDK_STATIC_TAR='dpdk.tar.xz'
 
 arch=$(arch)
-
-dpdk_lava_result() {
-	reason=$1
-	result=$2
-	stop_session=$3
-
-	lava-test-case "$reason" --result "$result"
-	[ "$stop_session" = 'yes' ] && lava-test-raise "$reason" && exit 1
-}
 
 wget https://fast.dpdk.org/rel/dpdk-"$DPDK_VER".tar.xz -O "$DPDK_STATIC_TAR" && \
 	mkdir "$DPDK_DIR" && tar xf "$DPDK_STATIC_TAR" --strip 1 -C "$DPDK_DIR"
@@ -38,3 +31,4 @@ esac
 cd "$DPDK_DIR"
 make -j "$cjobs" install T="$dpdk_t" DESTDIR=./install
 cd ..
+dpdk_lava_result 'DPDK_BUILD' 'OK' 'no'
