@@ -126,3 +126,24 @@ actions:
           from: git
           path: execs/odp-build.yaml
           name: build-ODP
+
+- test:
+    role:
+        - thunderx
+    timeout:
+        minutes: 900
+    definitions:
+        - repository: https://github.com/Linaro/odp-ci-lava.git
+          from: git
+          path: execs/ping-c.yaml
+          name: Ping
+- test:
+    role:
+        - lng03
+    timeout:
+        minutes: 900
+        - repository: https://github.com/Linaro/odp-ci-lava.git
+          from: git
+          path: execs/ping-s.yaml
+          name: Ping
+

@@ -1,0 +1,10 @@
+metadata:
+  name: ODP installation
+  format: "Lava-Test-Shell Test Definition 1.0"
+  description: "Ping"
+  version: 1.0
+
+run:
+    steps:
+        - echo "Ping"
+        - ./scripts/ping.sh client
