@@ -142,6 +142,7 @@ actions:
         - lng03
     timeout:
         minutes: 900
+    definitions:
         - repository: https://github.com/Linaro/odp-ci-lava.git
           from: git
           path: execs/ping-s.yaml
