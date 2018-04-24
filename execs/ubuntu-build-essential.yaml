@@ -17,6 +17,7 @@ install:
         - libcunit1-dev
         - libconfig-dev
         - locales-all
+        - net-tools
         - make
         - m4
         - pkg-config
