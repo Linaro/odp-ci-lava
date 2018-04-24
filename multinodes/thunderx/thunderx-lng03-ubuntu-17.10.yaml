@@ -18,12 +18,12 @@ protocols:
                 device_type: thunderx
                 count: 1
                 context:
-                    extra_kernel_args: default_hugepagesz=2M hugepagesz=1G hugepages=1 hugepagesz=2M hugepages=1024
+                    extra_kernel_args: default_hugepagesz=2M hugepagesz=1G hugepages=1 hugepagesz=2M hugepages=1024 rootwait
             lng03:
                 device_type: x86
                 count: 1
                 context:
-                    extra_kernel_args: default_hugepagesz=2M hugepagesz=1G hugepages=1 hugepagesz=2M hugepages=1024
+                    extra_kernel_args: default_hugepagesz=2M hugepagesz=1G hugepages=1 hugepagesz=2M hugepages=1024 rootwait
     lava-vland:
         thunderx:
             vlan_one:
