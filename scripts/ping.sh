@@ -18,10 +18,12 @@ fi
 VLAND_NAME=${VLAND_NAME:-vlan_one}
 
 function what_vland_entry {
+	echo `lava-vland-names`
         lava-vland-names | grep "^$1" | cut -d , -f 2
 }
 
 function what_vland_sys_path {
+	echo `lava-vland-self`
         lava-vland-self | grep "$(what_vland_entry $1)" | cut -d , -f 3
 }
 
@@ -30,7 +32,7 @@ function what_vland_MAC {
 }
 
 function what_vland_interface {
-	        ls $(what_vland_sys_path $1)
+        ls $(what_vland_sys_path $1)
 }
 
 if ! which lava-wait &>/dev/null; then
