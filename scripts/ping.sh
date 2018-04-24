@@ -33,9 +33,12 @@ function what_vland_interface {
         ls $(what_vland_sys_path $1)
 }
 
+ifconfig -a
+
 lava-vland-names
-what_vland_sys_path
-function what_vland_interface
+lava-vland-names | grep "^$1" | cut -d , -f 2
+lava-vland-self 
+what_vland_interface ${VLAND_NAME}
 
 if ! which lava-wait &>/dev/null; then
         echo "This script must be executed in LAVA"
