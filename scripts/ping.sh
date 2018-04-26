@@ -35,6 +35,14 @@ function what_vland_interface {
 
 ifconfig -a
 
+
+VLAND_SELF=`lava-vland-self | grep ${VLAND_NAME}`
+echo "VLAND_SELF = ${VLAND_SELF}"
+MAC=`echo ${VLAND_SELF} | cut -d , -f 2`
+echo "MAC = ${MAC}"
+
+fgrep -r ${MAC} /sys 2> /dev/null
+
 lava-vland-names
 lava-vland-names | grep "^$1" | cut -d , -f 2
 lava-vland-self 
