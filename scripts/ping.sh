@@ -22,7 +22,7 @@ function what_vland_entry {
 }
 
 function what_vland_sys_path {
-        lava-vland-self | grep "$(what_vland_entry $1)" | cut -d , -f 3
+	lava-vland-self | grep "$(what_vland_entry $1)" | cut -d , -f 3 | cut -d / -f 8
 }
 
 function what_vland_MAC {
